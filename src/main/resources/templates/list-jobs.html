@@ -15,7 +15,12 @@
         <table class="job-listing">
             <tr th:each="item:${job.entrySet()}">
                 <td th:text="${#strings.capitalizeWords(item.getKey())}+':'"></td>
-                <td th:text="${item.getValue()}"></td>
+                <td>
+                    <div th:switch="${item.getKey()}">
+                        <p th:case="'name'" th:text="${item.getValue()}"></p>
+                        <p th:case="*" ><a th:href="@{/list/jobs(column=${column},value=${item})}" th:text="${item.getValue()}" th:if="${not #strings.equals(item.getKey(),'name')}"></a></p>
+                    </div>
+                </td>
             </tr>
         </table>
     </th:block>
